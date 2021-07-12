@@ -1,4 +1,5 @@
-﻿using ApiCatalogoJogos.InputModel;
+﻿using ApiCatalogoJogos.Exceptions;
+using ApiCatalogoJogos.InputModel;
 using ApiCatalogoJogos.Services;
 using ApiCatalogoJogos.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -39,9 +40,8 @@ namespace ApiCatalogoJogos.Controllers.V1
             var jogo = await _jogoService.Obter(idJogo);
 
             if(jogo == null)
-            {
                 return NoContent();
-            }
+
             return Ok(jogo);
         }
 
@@ -53,8 +53,7 @@ namespace ApiCatalogoJogos.Controllers.V1
                 var jogo = await _jogoService.Inserir(jogoInputModel);
                 return Ok(jogo);
             }
-            //catch (JogoJaCadastradoExeception ex)
-            catch (Exception ex)
+            catch (JogoJaCadastradoException ex)
             {
 
                 return UnprocessableEntity("Já existe um jogo com este nome para esta produtora.");
@@ -69,8 +68,7 @@ namespace ApiCatalogoJogos.Controllers.V1
                 await _jogoService.Atualizar(idJogo, jogoInputModel);
                 return Ok();
             }
-            //catch (JogoNaoCadastradoExeception ex)
-            catch (Exception ex)
+            catch (JogoNaoCadastradoException ex)
             {
                 return NotFound("Jogo não encontrado.");
             }
@@ -84,8 +82,7 @@ namespace ApiCatalogoJogos.Controllers.V1
                 await _jogoService.Atualizar(idJogo, preco);
                 return Ok();
             }
-            //catch (JogoNaoCadastradoExeception ex)
-            catch (Exception ex)
+            catch (JogoNaoCadastradoException ex)
             {
                 return NotFound("Jogo não encontrado.");
             }
@@ -99,8 +96,7 @@ namespace ApiCatalogoJogos.Controllers.V1
                 await _jogoService.Remover(idJogo);
                 return Ok();
             }
-            //catch (JogoNaoCadastradoExeception ex)
-            catch (Exception ex)
+            catch (JogoNaoCadastradoException ex)
             {
                 return NotFound("Jogo não encontrado.");
             }
