@@ -1,3 +1,5 @@
+using ApiCatalogoJogos.Repositories;
+using ApiCatalogoJogos.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +34,9 @@ namespace ApiCatalogoJogos
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiCatalogoJogos", Version = "v1" });
             });
+
+            services.AddScoped<IJogoService, JogoService>();
+            services.AddScoped<IJogoRepository, JogoRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
